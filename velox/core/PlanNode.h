@@ -1449,4 +1449,51 @@ class AssignUniqueIdNode : public PlanNode {
   std::shared_ptr<std::atomic_int64_t> uniqueIdCounter_;
 };
 
+/// Projects on the markerSymbol, which is a boolean which is true for only one
+/// row per unique combination of distinctSymbols.
+///
+/// Uses:
+///
+/// to create a masking flag for use with a DISTINCT aggregator.
+/// in scalar correlated subqueries
+
+class MarkDistinctNode : public PlanNode {
+ public:
+  MarkDistinctNode(
+      const PlanNodeId& id,
+      const std::vector<std::shared_ptr<const FieldAccessTypedExpr>>&
+          distinctVariables,
+      std::shared_ptr<const PlanNode> source);
+
+  const RowTypePtr& outputType() const override {
+    return outputType_;
+  }
+
+  const std::vector<std::shared_ptr<const PlanNode>>& sources() const override {
+    return sources_;
+  }
+
+  const RowTypePtr& inputType() const {
+    return sources_[0]->outputType();
+  }
+
+  std::string_view name() const override {
+    return "MarkDistinct";
+  }
+
+  const std::vector<std::shared_ptr<const core::ITypedExpr>>
+  getDistinctVariables() const {
+    return (const std::vector<std::shared_ptr<const ITypedExpr>>&)
+        distinctVariables_;
+  }
+
+ private:
+  void addDetails(std::stringstream& stream) const override;
+
+  std::vector<std::shared_ptr<const FieldAccessTypedExpr>> distinctVariables_;
+  const std::vector<std::shared_ptr<const PlanNode>> sources_;
+
+  RowTypePtr outputType_;
+};
+
 } // namespace facebook::velox::core

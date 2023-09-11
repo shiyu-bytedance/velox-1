@@ -37,6 +37,10 @@ class TestValue {
   /// Check if the test value injection is enabled or not.
   static bool enabled();
 
+  static void setMode(int m);
+  static int getMode();
+
+
   /// Invoked by the test code to register a callback hook at the specified
   /// execution point. 'injectionPoint' is a string to identify the execution
   /// point which could be formed by concatenating namespace, class name, method

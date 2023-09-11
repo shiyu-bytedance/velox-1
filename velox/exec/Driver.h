@@ -341,6 +341,18 @@ class Driver : public std::enable_shared_from_this<Driver> {
       std::shared_ptr<Driver>& self,
       std::shared_ptr<BlockingState>& blockingState,
       RowVectorPtr& result);
+  StopReason runInternal1(
+      std::shared_ptr<Driver>& self,
+      std::shared_ptr<BlockingState>& blockingState,
+      RowVectorPtr& result);
+  StopReason runInternal2(
+      std::shared_ptr<Driver>& self,
+      std::shared_ptr<BlockingState>& blockingState,
+      RowVectorPtr& result);
+  StopReason runInternal3(
+      std::shared_ptr<Driver>& self,
+      std::shared_ptr<BlockingState>& blockingState,
+      RowVectorPtr& result);
 
   void close();
 

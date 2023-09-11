@@ -44,6 +44,7 @@ add_executable(
   HashJoinTest.cpp
   HashBitRangeTest.cpp
   HashPartitionFunctionTest.cpp
+        HashAggGroupProbePerfTest.cpp
   HashTableTest.cpp
   LimitTest.cpp
   LocalPartitionTest.cpp

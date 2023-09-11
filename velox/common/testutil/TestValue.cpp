@@ -55,6 +55,16 @@ void TestValue::adjust(const std::string& injectionPoint, void* testData) {
   injectionCb(testData);
 }
 #else
+bool is_enabled = false;
+int mode = 0;
+void TestValue::setMode(int m) {
+  mode = m;
+}
+
+int TestValue::getMode() {
+  return mode;
+}
+
 void TestValue::enable() {}
 void TestValue::disable() {}
 bool TestValue::enabled() {
